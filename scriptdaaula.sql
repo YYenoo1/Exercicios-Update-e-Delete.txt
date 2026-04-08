@@ -1,6 +1,8 @@
 -- =========================================
 -- CRIAÇÃO DAS TABELAS
 -- =========================================
+Create database ALEGRIA;
+use ALEGRIA;
 CREATE TABLE clientes (
 id_cliente INT AUTO_INCREMENT PRIMARY KEY,
 nome VARCHAR(100) NOT NULL,
@@ -93,3 +95,68 @@ where id_pedido = 2;
 update produtos
 set preco = preco + 10
 where categoria = 'Papelaria';
+-- Altere o status_cliente para 'Ativo' de todos os clientes que estão como 'Inativo'.
+update clientes
+set status_cliente = 'Ativo'
+where status_cliente = 'inativo';
+-- Reduza em 5 unidades o estoque do produto 'Mochila'.
+update produtos
+set estoque = estoque - 5
+where nome_produto = 'mochila';
+-- Altere o status_pedido para 'Cancelado' de todos os pedidos com valor_total menor que 60.00.
+update pedidos
+set status_pedido = 'Cancelado' 
+where valor_total<60;
+-- Aumente em 15% o preço de todos os produtos da categoria 'Informática'.
+update produtos
+set preco = preco * 1.15
+where categoria = 'Informática';
+-- Altere a cidade para 'Campinas' de todos os clientes que têm idade menor que 25 anos.
+update clientes
+set cidade = 'Campinas'
+where idade<25;
+-- Altere o status_pedido para 'Entregue' em todos os pedidos feitos por clientes da cidade de 'São Paulo'.
+update pedidos
+set status_pedido = 'Entregue'
+where id_cliente in (
+select id_cliente
+from clientes
+where cidade = 'São Paulo'
+);
+-- =========================================
+-- EXERCÍCIOS DE DELETE
+-- =========================================
+-- Exclua o produto com id_produto = 10.
+DELETE FROM pedidos 
+WHERE id_produto = 10;
+-- Exclua o cliente chamado 'João Pedro'.
+delete from clientes
+where nome = 'João Pedro';
+-- Exclua o pedido com id_pedido = 3.
+DELETE FROM pedidos 
+WHERE id_pedido = 3;
+-- Exclua todos os produtos da categoria 'Livros'.
+delete from produtos
+where categoria = 'livros';
+-- Exclua todos os clientes com status_cliente = 'Inativo'.
+delete from clientes
+where status_cliente = 'inativo';
+-- Exclua todos os pedidos com status_pedido = 'Cancelado'.
+delete from pedidos
+where status_pedido = 'Cancelado';
+-- Exclua todos os produtos com estoque menor que 15.
+delete from produtos
+where estoque = estoque<15;
+-- Exclua todos os clientes com idade maior que 35 anos.
+delete from clientes
+where idade>35;
+-- Exclua todos os pedidos com valor_total menor que 50.00.
+delete from pedidos
+where valor_total>50;
+-- Exclua todos os pedidos realizados por clientes da cidade de 'Campinas'.
+DELETE FROM pedidos
+WHERE id_cliente IN (
+    SELECT id_cliente
+    FROM clientes
+    WHERE cidade = 'Campinas'
+);
